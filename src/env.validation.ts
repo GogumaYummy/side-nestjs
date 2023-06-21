@@ -1,7 +1,7 @@
 import { plainToInstance, Transform } from 'class-transformer';
 import { IsDefined, IsNumber, validateSync } from 'class-validator';
 
-class AppConfig {
+class EnvironmentVariables {
   @IsNumber()
   @IsDefined()
   @Transform(({ value }) => parseInt(value, 10))
@@ -9,7 +9,7 @@ class AppConfig {
 }
 
 export function validate(config: Record<string, unknown>) {
-  const appConfig = plainToInstance(AppConfig, config, {
+  const appConfig = plainToInstance(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });
 

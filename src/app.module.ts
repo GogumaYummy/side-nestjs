@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { validate } from './config-validation';
+import { validate } from './env.validation';
 import { UserModule } from './user/user.module';
 
 @Module({
