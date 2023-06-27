@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { validate } from './env.validation';
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
+import { Post } from './post/post.entity';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { PostModule } from './post/post.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
+        entities: [Post],
         synchronize: configService.get('NODE_ENV') === 'development',
       }),
     }),
