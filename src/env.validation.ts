@@ -1,11 +1,12 @@
 import { plainToInstance, Transform } from 'class-transformer';
-import { IsDefined, IsNumber, validateSync } from 'class-validator';
+import { IsInt, Max, Min, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
-  @IsNumber()
-  @IsDefined()
+  @IsInt()
+  @Min(0)
+  @Max(65535)
   @Transform(({ value }) => parseInt(value, 10))
-  PORT!: number;
+  PORT: number;
 }
 
 export function validate(config: Record<string, unknown>) {
