@@ -1,5 +1,14 @@
 import { plainToInstance, Transform } from 'class-transformer';
-import { IsIn, IsInt, Max, Min, validateSync } from 'class-validator';
+import {
+  IsIn,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  IsUrl,
+  Max,
+  Min,
+  validateSync,
+} from 'class-validator';
 
 class EnvironmentVariables {
   @IsIn(['development', 'test', 'production'])
@@ -10,6 +19,25 @@ class EnvironmentVariables {
   @Max(65535)
   @Transform(({ value }) => parseInt(value, 10))
   PORT: number;
+
+  @IsUrl({ require_tld: false })
+  DB_HOST: string;
+
+  @IsInt()
+  @Min(0)
+  @Max(65535)
+  @Transform(({ value }) => parseInt(value, 10))
+  DB_PORT: number;
+
+  @IsString()
+  @IsNotEmpty()
+  DB_USERNAME: string;
+
+  @IsString()
+  DB_PASSWORD: string;
+
+  @IsString()
+  DB_DATABASE: string;
 }
 
 export function validate(config: Record<string, unknown>) {
