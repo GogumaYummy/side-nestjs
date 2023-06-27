@@ -4,13 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validate } from './env.validation';
-import { UserModule } from './user/user.module';
-import { PostModule } from './post/post.module';
-import { Post } from './post/post.entity';
+import { Post } from './posts/post.entity';
+import { PostsModule } from './posts/posts.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({ validate }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -26,7 +25,8 @@ import { Post } from './post/post.entity';
         synchronize: configService.get('NODE_ENV') === 'development',
       }),
     }),
-    PostModule,
+    PostsModule,
+    UsersModule,
   ],
   //TODO: 이후 배포 환경에서의 환경 변수는 따로 지정하게 할 것
   controllers: [AppController],
