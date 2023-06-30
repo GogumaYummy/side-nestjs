@@ -21,7 +21,7 @@ import { UsersModule } from './users/users.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Post],
+        autoLoadEntities: true,
         synchronize: configService.get('NODE_ENV') === 'development',
       }),
     }),
