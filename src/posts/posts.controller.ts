@@ -18,9 +18,7 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  createPost(
-    @Body('createPostDto') createPostDto: CreatePostDto,
-  ): Promise<PostEntity> {
+  createPost(@Body() createPostDto: CreatePostDto): Promise<PostEntity> {
     return this.postsService.createPost(createPostDto);
   }
 
@@ -37,7 +35,7 @@ export class PostsController {
   @Put(':postId')
   updatePost(
     @Param('postId') postId: number,
-    @Body('updatePostDto') updatePostDto: UpdatePostDto,
+    @Body() updatePostDto: UpdatePostDto,
   ): Promise<PostEntity> {
     return this.postsService.updatePost(postId, updatePostDto);
   }
