@@ -46,7 +46,7 @@ export class PostsService {
     return await this.postsRepository.save(post);
   }
 
-  async deletePost(postId): Promise<void> {
+  async deletePost(postId: number): Promise<void> {
     const post = await this.postsRepository.findOneBy({ postId });
 
     if (!post) throw new Error('게시글을 찾을 수 없습니다');
