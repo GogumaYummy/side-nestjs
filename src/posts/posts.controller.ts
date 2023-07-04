@@ -38,12 +38,12 @@ export class PostsController {
   updatePost(
     @Param('postId') postId: number,
     @Body('updatePostDto') updatePostDto: UpdatePostDto,
-  ) {
+  ): Promise<PostEntity> {
     return this.postsService.updatePost(postId, updatePostDto);
   }
 
   @Delete(':postId')
-  deletePost(@Param('postId') postId: number) {
+  deletePost(@Param('postId') postId: number): Promise<void> {
     return this.postsService.deletePost(postId);
   }
 }
