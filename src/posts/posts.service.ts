@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
+import { CreatePostDto, UpdatePostDto } from './posts.dto';
 
 @Injectable()
 export class PostsService {
@@ -10,11 +11,11 @@ export class PostsService {
     private readonly postsRepository: Repository<Post>,
   ) {}
 
-  async createPost(title: string, content: string): Promise<Post> {
+  async createPost(createPostDto: CreatePostDto): Promise<Post> {
     const post = new Post();
 
-    post.title = title;
-    post.content = content;
+    post.title = createPostDto.title;
+    post.content = createPostDto.content;
 
     return await this.postsRepository.save(post);
   }
@@ -33,15 +34,14 @@ export class PostsService {
 
   async updatePost(
     postId: number,
-    title: string,
-    content: string,
+    updatePostDto: UpdatePostDto,
   ): Promise<Post> {
     const post = await this.postsRepository.findOneBy({ postId });
 
     if (!post) throw new Error('게시글을 찾을 수 없습니다');
 
-    post.title = title;
-    post.content = content;
+    post.title = updatePostDto.title;
+    post.content = updatePostDto.content;
 
     return await this.postsRepository.save(post);
   }
