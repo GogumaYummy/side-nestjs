@@ -7,7 +7,7 @@ import { Post } from './post.entity';
 export class PostsService {
   constructor(
     @InjectRepository(Post)
-    private postsRepository: Repository<Post>,
+    private readonly postsRepository: Repository<Post>,
   ) {}
 
   async createPost(title: string, content: string): Promise<Post> {
