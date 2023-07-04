@@ -4,6 +4,6 @@ export class CreatePostDto {
 }
 
 export class UpdatePostDto {
-  title: string;
-  content: string;
+  title?: string;
+  content?: string;
 }
