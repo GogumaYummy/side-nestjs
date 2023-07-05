@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  ValidationPipe,
 } from '@nestjs/common';
 
 import { Post as PostEntity } from './post.entity';
@@ -18,7 +19,9 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  createPost(@Body() createPostDto: CreatePostDto): Promise<PostEntity> {
+  createPost(
+    @Body(new ValidationPipe()) createPostDto: CreatePostDto,
+  ): Promise<PostEntity> {
     return this.postsService.createPost(createPostDto);
   }
 
@@ -35,7 +38,7 @@ export class PostsController {
   @Put(':postId')
   updatePost(
     @Param('postId') postId: number,
-    @Body() updatePostDto: UpdatePostDto,
+    @Body(new ValidationPipe()) updatePostDto: UpdatePostDto,
   ): Promise<PostEntity> {
     return this.postsService.updatePost(postId, updatePostDto);
   }
