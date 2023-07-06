@@ -21,8 +21,8 @@ describe('PostsService', () => {
       ],
     }).compile();
 
-    postsService = module.get(PostsService);
-    postsRepository = module.get(getRepositoryToken(Post));
+    postsService = module.get<PostsService>(PostsService);
+    postsRepository = module.get<Repository<Post>>(getRepositoryToken(Post));
   });
 
   describe('createPost', () => {
