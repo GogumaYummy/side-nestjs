@@ -16,12 +16,7 @@ describe('PostsService', () => {
         PostsService,
         {
           provide: getRepositoryToken(Post),
-          useValue: {
-            save: jest.fn(),
-            find: jest.fn(),
-            findOneBy: jest.fn(),
-            delete: jest.fn(),
-          },
+          useClass: Repository,
         },
       ],
     }).compile();
