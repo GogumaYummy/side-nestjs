@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
@@ -27,7 +27,7 @@ export class PostsService {
   async getPostById(postId: number): Promise<Post> {
     const post = await this.postsRepository.findOneBy({ postId });
 
-    if (!post) throw new Error('게시물을 찾을 수 없습니다');
+    if (!post) throw new NotFoundException('게시물을 찾을 수 없습니다');
 
     return post;
   }
@@ -38,7 +38,7 @@ export class PostsService {
   ): Promise<Post> {
     const post = await this.postsRepository.findOneBy({ postId });
 
-    if (!post) throw new Error('게시물을 찾을 수 없습니다');
+    if (!post) throw new NotFoundException('게시물을 찾을 수 없습니다');
 
     post.title = updatePostDto.title;
     post.content = updatePostDto.content;
@@ -49,7 +49,7 @@ export class PostsService {
   async deletePost(postId: number): Promise<void> {
     const post = await this.postsRepository.findOneBy({ postId });
 
-    if (!post) throw new Error('게시물을 찾을 수 없습니다');
+    if (!post) throw new NotFoundException('게시물을 찾을 수 없습니다');
 
     await this.postsRepository.delete(post);
   }
