@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   ValidationPipe,
@@ -31,20 +32,22 @@ export class PostsController {
   }
 
   @Get(':postId')
-  getPostById(@Param('postId') postId: number): Promise<PostEntity> {
+  getPostById(
+    @Param('postId', ParseIntPipe) postId: number,
+  ): Promise<PostEntity> {
     return this.postsService.getPostById(postId);
   }
 
   @Put(':postId')
   updatePost(
-    @Param('postId') postId: number,
+    @Param('postId', ParseIntPipe) postId: number,
     @Body(new ValidationPipe()) updatePostDto: UpdatePostDto,
   ): Promise<PostEntity> {
     return this.postsService.updatePost(postId, updatePostDto);
   }
 
   @Delete(':postId')
-  deletePost(@Param('postId') postId: number): Promise<void> {
+  deletePost(@Param('postId', ParseIntPipe) postId: number): Promise<void> {
     return this.postsService.deletePost(postId);
   }
 }
