@@ -1,6 +1,5 @@
 import { plainToInstance, Transform } from 'class-transformer';
 import {
-  IsIn,
   IsInt,
   IsNotEmpty,
   IsString,
@@ -11,9 +10,6 @@ import {
 } from 'class-validator';
 
 class EnvironmentVariables {
-  @IsIn(['development', 'test', 'production'])
-  NODE_ENV: 'development' | 'test' | 'production';
-
   @IsInt()
   @Min(0)
   @Max(65535)
