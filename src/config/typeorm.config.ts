@@ -12,6 +12,6 @@ export function typeOrmConfig(
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_DATABASE'),
     autoLoadEntities: true,
-    synchronize: configService.get('NODE_ENV') === 'development',
+    synchronize: configService.get('NODE_ENV') !== 'production',
   };
 }
