@@ -56,4 +56,20 @@ describe('PostsController (e2e)', () => {
         .expect(HttpStatus.BAD_REQUEST);
     });
   });
+
+  describe('GET /posts', () => {
+    it('게시물 목록을 성공적으로 불러온 경우', async () => {
+      const expectedPost = {
+        postId: 1,
+        title: 'Lorem Ipsum',
+        content: 'Lorem ipsum dolor sit amet',
+      };
+
+      const response = await request(app.getHttpServer())
+        .get('/posts')
+        .expect(HttpStatus.OK);
+
+      expect(response.body[0]).toEqual(expectedPost);
+    });
+  });
 });
