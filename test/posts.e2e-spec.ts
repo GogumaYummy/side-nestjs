@@ -72,4 +72,40 @@ describe('PostsController (e2e)', () => {
       expect(response.body[0]).toEqual(expectedPost);
     });
   });
+
+  describe('GET /posts/:postId', () => {
+    it('해당하는 게시물을 성공적으로 불러온 경우', async () => {
+      const postIdToFind = 1;
+      const expectedPost = {
+        title: 'Lorem Ipsum',
+        content: 'Lorem ipsum dolor sit amet',
+      };
+
+      const response = await request(app.getHttpServer())
+        .get(`/posts/${postIdToFind}`)
+        .expect(HttpStatus.OK);
+
+      const { postId, title, content } = response.body;
+
+      expect(postId).toBe(postIdToFind);
+      expect(title).toBe(expectedPost.title);
+      expect(content).toBe(expectedPost.content);
+    });
+
+    it('잘못된 경로 매개변수와 함께 요청을 받은 경우', async () => {
+      const postIdToFind = 'hello';
+
+      await request(app.getHttpServer())
+        .get(`/posts/${postIdToFind}`)
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it('해당하는 게시물이 없을 경우', async () => {
+      const postIdToFind = 2;
+
+      await request(app.getHttpServer())
+        .get(`/posts/${postIdToFind}`)
+        .expect(HttpStatus.NOT_FOUND);
+    });
+  });
 });
