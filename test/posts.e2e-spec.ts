@@ -108,4 +108,51 @@ describe('PostsController (e2e)', () => {
         .expect(HttpStatus.NOT_FOUND);
     });
   });
+
+  describe('PUT /posts/:postId', () => {
+    it('해당하는 게시물이 성공적으로 수정된 경우', async () => {
+      const postIdToUpdate = 1;
+      const updatePostDto = { content: 'Fusce vel dui vitae nisi' };
+
+      const response = await request(app.getHttpServer())
+        .put(`/posts/${postIdToUpdate}`)
+        .send(updatePostDto)
+        .expect(HttpStatus.OK);
+
+      const { postId, content } = response.body;
+
+      expect(postId).toBe(postIdToUpdate);
+      expect(content).toBe('Fusce vel dui vitae nisi');
+    });
+
+    it('잘못된 경로 매개변수와 함께 요청을 받은 경우', async () => {
+      const postIdToUpdate = 'hello';
+      const updatePostDto = { content: 'Fusce vel dui vitae nisi' };
+
+      await request(app.getHttpServer())
+        .put(`/posts/${postIdToUpdate}`)
+        .send(updatePostDto)
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it('해당하는 게시물이 없을 경우', async () => {
+      const postIdToUpdate = 2;
+      const updatePostDto = { content: 'Fusce vel dui vitae nisi' };
+
+      await request(app.getHttpServer())
+        .put(`/posts/${postIdToUpdate}`)
+        .send(updatePostDto)
+        .expect(HttpStatus.NOT_FOUND);
+    });
+
+    it('요청 본문이 잘못된 경우', async () => {
+      const postIdToUpdate = 1;
+      const updatePostDto = { title: 322 };
+
+      await request(app.getHttpServer())
+        .put(`/posts/${postIdToUpdate}`)
+        .send(updatePostDto)
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+  });
 });
