@@ -155,4 +155,34 @@ describe('PostsController (e2e)', () => {
         .expect(HttpStatus.BAD_REQUEST);
     });
   });
+
+  describe('DELETE /posts/:postId', () => {
+    it('해당하는 게시물을 성공적으로 삭제한 경우', async () => {
+      const postIdToDelete = 1;
+
+      await request(app.getHttpServer())
+        .delete(`/posts/${postIdToDelete}`)
+        .expect(HttpStatus.OK);
+
+      await request(app.getHttpServer())
+        .get(`/posts/${postIdToDelete}`)
+        .expect(HttpStatus.NOT_FOUND);
+    });
+
+    it('잘못된 경로 매개변수와 함께 요청을 받은 경우', async () => {
+      const postIdToDelete = 'hello';
+
+      await request(app.getHttpServer())
+        .delete(`/posts/${postIdToDelete}`)
+        .expect(HttpStatus.BAD_REQUEST);
+    });
+
+    it('해당하는 게시물이 없을 경우', async () => {
+      const postIdToDelete = 2;
+
+      await request(app.getHttpServer())
+        .delete(`/posts/${postIdToDelete}`)
+        .expect(HttpStatus.NOT_FOUND);
+    });
+  });
 });
