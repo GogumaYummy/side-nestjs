@@ -40,8 +40,12 @@ export class PostsService {
 
     if (!post) throw new NotFoundException('게시물을 찾을 수 없습니다');
 
-    post.title = updatePostDto.title;
-    post.content = updatePostDto.content;
+    if (updatePostDto.title) {
+      post.title = updatePostDto.title;
+    }
+    if (updatePostDto.content) {
+      post.content = updatePostDto.content;
+    }
 
     return await this.postsRepository.save(post);
   }
